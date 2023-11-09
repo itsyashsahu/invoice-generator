@@ -35,13 +35,13 @@ class InvoiceForm extends React.Component {
     this.state = {
       ...initialState,
       items: [
-        {
-          id: 0,
-          name: '',
-          description: '',
-          price: '1.00',
-          quantity: 1,
-        },
+        // {
+        //   id: 0,
+        //   name: '',
+        //   description: '',
+        //   price: '1.00',
+        //   quantity: 1,
+        // },
       ],
       ...props.invoice, // Use props if provided
       isOpen: false, // reset isOpen to false since we don't want the modal to be open by default 
