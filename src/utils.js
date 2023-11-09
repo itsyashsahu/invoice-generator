@@ -23,7 +23,7 @@ const initialState = {
   taxRate: 10,
   taxAmount: 10.00,
   discountRate: 5,
-  discountAmmount: 5.00,
+  discountAmount: 5.00,
 };
 
 const initialItems = [

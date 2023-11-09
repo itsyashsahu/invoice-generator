@@ -24,9 +24,9 @@ let initialState = {
   total: 0.00,
   subTotal: 0.00,
   taxRate: '',
-  taxAmmount: 0.00,
+  taxAmount: 0.00,
   discountRate: '',
-  discountAmmount: 0.00,
+  discountAmount: 0.00,
   items: [
     {
       id: 0,
@@ -41,7 +41,6 @@ let initialState = {
 const InvoiceCard = ({ invoice = initialState }) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
 
   const handleDelete = () => {
     store.dispatch(deleteInvoice(invoice.invoiceNumber))
@@ -55,10 +54,6 @@ const InvoiceCard = ({ invoice = initialState }) => {
   const handleCopy = () => {
     store.dispatch(setEditInvoice(invoice))
     navigate("/invoice-create")
-  }
-
-  const handleDeleteModal = () => {
-
   }
 
   return (
@@ -132,18 +127,18 @@ const InvoiceCard = ({ invoice = initialState }) => {
               <td className="fw-bold" style={{ width: '100px' }}>SUBTOTAL</td>
               <td className="text-end" style={{ width: '100px' }}>{invoice.currency} {invoice.subTotal}</td>
             </tr>
-            {invoice.taxAmmount !== 0.00 &&
+            {invoice.taxAmount !== 0.00 &&
               <tr className="text-end">
                 <td></td>
                 <td className="fw-bold" style={{ width: '100px' }}>TAX</td>
-                <td className="text-end" style={{ width: '100px' }}>{invoice.currency} {invoice.taxAmmount}</td>
+                <td className="text-end" style={{ width: '100px' }}>{invoice.currency} {invoice.taxAmount}</td>
               </tr>
             }
-            {invoice.discountAmmount !== 0.00 &&
+            {invoice.discountAmount !== 0.00 &&
               <tr className="text-end">
                 <td></td>
                 <td className="fw-bold" style={{ width: '100px' }}>DISCOUNT</td>
-                <td className="text-end" style={{ width: '100px' }}>{invoice.currency} {invoice.discountAmmount}</td>
+                <td className="text-end" style={{ width: '100px' }}>{invoice.currency} {invoice.discountAmount}</td>
               </tr>
             }
             <tr className="text-end">

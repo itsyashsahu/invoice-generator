@@ -8,6 +8,8 @@ import Card from 'react-bootstrap/Card';
 import InvoiceItem from './InvoiceItem';
 import InvoiceModal from './InvoiceModal';
 import InputGroup from 'react-bootstrap/InputGroup';
+
+
 class InvoiceForm extends React.Component {
   constructor(props) {
     super(props);
@@ -25,12 +27,12 @@ class InvoiceForm extends React.Component {
       billFromEmail: '',
       billFromAddress: '',
       notes: '',
-      total: '0.00',
-      subTotal: '0.00',
+      total: 0.00,
+      subTotal: 0.00,
       taxRate: '',
-      taxAmount: '0.00',
+      taxAmount: 0.00,
       discountRate: '',
-      discountAmount: '0.00',
+      discountAmount: 0.00,
     };
     this.state = {
       ...initialState,
@@ -39,7 +41,7 @@ class InvoiceForm extends React.Component {
         //   id: 0,
         //   name: '',
         //   description: '',
-        //   price: '1.00',
+        //   price: 1.00,
         //   quantity: 1,
         // },
       ],
@@ -61,33 +63,37 @@ class InvoiceForm extends React.Component {
     var items = {
       id: id,
       name: '',
-      price: '1.00',
+      price: 1.00,
       description: '',
       quantity: 1
     }
     this.state.items.push(items);
     this.setState(this.state.items);
+    this.handleCalculateTotal()
   }
   handleCalculateTotal() {
     var items = this.state.items;
-    var subTotal = 0;
+    // var subTotal = 0;
 
-    items.map(function (items) {
-      subTotal = parseFloat(subTotal + (parseFloat(items.price).toFixed(2) * parseInt(items.quantity))).toFixed(2)
-      return null;
-    });
+    const subTotal = items.reduce((total, item) => {
+      const itemTotal = parseFloat((parseFloat(item.price) * parseInt(item.quantity)).toFixed(2));
+      return total + itemTotal;
+    }, 0).toFixed(2);
+
+    console.log("🚀 ~ InvoiceForm ~ items:", items)
+    console.log("🚀 ~ InvoiceForm ~ subTotal:", subTotal)
 
     this.setState({
       subTotal: parseFloat(subTotal).toFixed(2)
     }, () => {
       this.setState({
-        taxAmmount: parseFloat(parseFloat(subTotal) * (this.state.taxRate / 100)).toFixed(2)
+        taxAmount: parseFloat(parseFloat(subTotal) * (this.state.taxRate / 100)).toFixed(2)
       }, () => {
         this.setState({
-          discountAmmount: parseFloat(parseFloat(subTotal) * (this.state.discountRate / 100)).toFixed(2)
+          discountAmount: parseFloat(parseFloat(subTotal) * (this.state.discountRate / 100)).toFixed(2)
         }, () => {
           this.setState({
-            total: ((subTotal - this.state.discountAmmount) + parseFloat(this.state.taxAmmount))
+            total: ((subTotal - this.state.discountAmount) + parseFloat(this.state.taxAmount))
           });
         });
       });
@@ -183,7 +189,7 @@ class InvoiceForm extends React.Component {
                   <span>
                     <span className="small ">({this.state.discountRate || 0}%)</span>
                     {this.state.currency}
-                    {this.state.discountAmmount || 0}</span>
+                    {this.state.discountAmount || 0}</span>
                 </div>
                 <div className="d-flex flex-row align-items-start justify-content-between mt-2">
                   <span className="fw-bold">Tax:
@@ -191,7 +197,7 @@ class InvoiceForm extends React.Component {
                   <span>
                     <span className="small ">({this.state.taxRate || 0}%)</span>
                     {this.state.currency}
-                    {this.state.taxAmmount || 0}</span>
+                    {this.state.taxAmount || 0}</span>
                 </div>
                 <hr />
                 <div className="d-flex flex-row align-items-start justify-content-between" style={{
@@ -212,7 +218,7 @@ class InvoiceForm extends React.Component {
         <Col md={4} lg={3}>
           <div className="sticky-top pt-md-3 pt-xl-4">
             <Button variant="primary" type="submit" className="d-block w-100">Review Invoice</Button>
-            <InvoiceModal submitHandler={this.props.submitHandler} showModal={this.state.isOpen} closeModal={this.closeModal} info={this.state} items={this.state.items} currency={this.state.currency} subTotal={this.state.subTotal} taxAmmount={this.state.taxAmmount} discountAmmount={this.state.discountAmmount} total={this.state.total} />
+            <InvoiceModal submitHandler={this.props.submitHandler} showModal={this.state.isOpen} closeModal={this.closeModal} info={this.state} items={this.state.items} currency={this.state.currency} subTotal={this.state.subTotal} taxAmount={this.state.taxAmount} discountAmount={this.state.discountAmount} total={this.state.total} />
             <Form.Group className="mb-3">
               <Form.Label className="fw-bold">Currency:</Form.Label>
               <Form.Select onChange={event => this.onCurrencyChange({ currency: event.target.value })} className="btn btn-light my-1" aria-label="Change Currency">

@@ -113,18 +113,18 @@ const InvoiceModal = (props) => {
                   <td className="fw-bold" style={{ width: '100px' }}>SUBTOTAL</td>
                   <td className="text-end" style={{ width: '100px' }}>{props.currency} {props.subTotal}</td>
                 </tr>
-                {props.taxAmmount !== 0.00 &&
+                {props.taxAmount !== 0.00 &&
                   <tr className="text-end">
                     <td></td>
                     <td className="fw-bold" style={{ width: '100px' }}>TAX</td>
-                    <td className="text-end" style={{ width: '100px' }}>{props.currency} {props.taxAmmount}</td>
+                    <td className="text-end" style={{ width: '100px' }}>{props.currency} {props.taxAmount}</td>
                   </tr>
                 }
-                {props.discountAmmount !== 0.00 &&
+                {props.discountAmount !== 0.00 &&
                   <tr className="text-end">
                     <td></td>
                     <td className="fw-bold" style={{ width: '100px' }}>DISCOUNT</td>
-                    <td className="text-end" style={{ width: '100px' }}>{props.currency} {props.discountAmmount}</td>
+                    <td className="text-end" style={{ width: '100px' }}>{props.currency} {props.discountAmount}</td>
                   </tr>
                 }
                 <tr className="text-end">
