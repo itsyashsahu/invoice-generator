@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Col, Row, Table } from 'react-bootstrap'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+import { BiCopy } from 'react-icons/bi';
 import { store } from '../../redux/store';
 import { deleteInvoice, setEditInvoice } from '../../redux/invoices/actions';
 import { useNavigate } from 'react-router-dom';
+import { getDummyInvoice } from '../../utils';
+import DangerModal from '../DangerModal';
 
 let initialState = {
   isOpen: false,
@@ -18,12 +21,12 @@ let initialState = {
   billFromEmail: '',
   billFromAddress: '',
   notes: '',
-  total: '0.00',
-  subTotal: '0.00',
+  total: 0.00,
+  subTotal: 0.00,
   taxRate: '',
-  taxAmount: '0.00',
+  taxAmmount: 0.00,
   discountRate: '',
-  discountAmount: '0.00',
+  discountAmmount: 0.00,
   items: [
     {
       id: 0,
@@ -37,6 +40,8 @@ let initialState = {
 
 const InvoiceCard = ({ invoice = initialState }) => {
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
 
   const handleDelete = () => {
     store.dispatch(deleteInvoice(invoice.invoiceNumber))
@@ -46,6 +51,16 @@ const InvoiceCard = ({ invoice = initialState }) => {
     store.dispatch(setEditInvoice(invoice))
     navigate("/invoice-edit")
   }
+
+  const handleCopy = () => {
+    store.dispatch(setEditInvoice(invoice))
+    navigate("/invoice-create")
+  }
+
+  const handleDeleteModal = () => {
+
+  }
+
   return (
     <div className='card'>
       <div className="d-flex flex-row justify-content-between align-items-start bg-light w-100 p-4">
@@ -145,18 +160,33 @@ const InvoiceCard = ({ invoice = initialState }) => {
       </div>
       <div className="pb-4 px-4">
         <Row>
-          <Col md={6}>
+          <Col md={4}>
             <Button variant="primary" className="d-block w-100" onClick={handleEdit}>
               <AiOutlineEdit style={{ width: '15px', height: '15px', marginTop: '-3px' }} className="me-2" />Edit Invoice
             </Button>
           </Col>
-          <Col md={6}>
-            <Button variant="outline-danger" className="d-block w-100 mt-3 mt-md-0" onClick={handleDelete}>
+          <Col md={4}>
+            <Button variant="outline-danger" className="d-block w-100 mt-3 mt-md-0"
+              onClick={() => { setShow(true) }}>
               <AiOutlineDelete style={{ width: '16px', height: '16px', marginTop: '-3px' }} className="me-2" />
               Delete Invoice
             </Button>
           </Col>
+          <Col md={4}>
+            <Button variant="primary" className="d-block w-100 mt-3 mt-md-0" onClick={handleCopy}>
+              <BiCopy style={{ width: '16px', height: '16px', marginTop: '-3px' }} className="me-2" />
+              Copy Invoice
+            </Button>
+          </Col>
         </Row>
+        <DangerModal
+          show={show}
+          setShow={setShow}
+          Heading={"Delete Confirmation "}
+          msg={"Are you sure you want to delete this invoice? this cannot be undone."}
+          handleSave={handleDelete}
+          btnText='Delete'
+        />
       </div>
     </div>
   )
