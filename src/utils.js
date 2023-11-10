@@ -18,7 +18,7 @@ const initialState = {
   billFromEmail: 'jane.smith@example.com',
   billFromAddress: '456 Park Avenue, Bangalore, Karnataka - 560001, India',
   notes: 'Payment due within 30 days',
-  total: 100,
+  total: (Math.random() * 1000).toFixed(2),
   subTotal: 100,
   taxRate: 10,
   taxAmount: 10.00,
@@ -65,7 +65,7 @@ export function getDummyInvoice() {
 export function getDummyInvoices() {
 
   for (let i = 1; i <= 5; i++) {
-    multipleEntries.push({ ...dummyInvoice, invoiceNumber: i });
+    multipleEntries.push({ ...dummyInvoice, invoiceNumber: i, total: (Math.random() * 1000).toFixed(2) });
   }
 
   return multipleEntries;

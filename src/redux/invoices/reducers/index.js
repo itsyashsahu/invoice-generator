@@ -1,4 +1,4 @@
-import { ADD_INVOICE, CLEAR_EDIT_INVOICE, DELETE_INVOICE, SET_EDIT_INVOICE, UPDATE_INVOICE } from "../actions";
+import { ADD_INVOICE, CLEAR_EDIT_INVOICE, DELETE_INVOICE, SET_EDIT_INVOICE, UPDATE_INVOICE, SET_INVOICES } from "../actions";
 import { cloneDeep } from 'lodash';
 
 const initialState = {
@@ -55,6 +55,11 @@ const invoiceReducer = (state = initialState, action) => {
         ...state,
         editInvoice: null
       };
+    case SET_INVOICES:
+      return {
+        ...state,
+        invoices: action.payload
+      }
     default:
       return state;
   }

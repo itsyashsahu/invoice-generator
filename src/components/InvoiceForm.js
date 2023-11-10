@@ -80,9 +80,6 @@ class InvoiceForm extends React.Component {
       return total + itemTotal;
     }, 0).toFixed(2);
 
-    console.log("🚀 ~ InvoiceForm ~ items:", items)
-    console.log("🚀 ~ InvoiceForm ~ subTotal:", subTotal)
-
     this.setState({
       subTotal: parseFloat(subTotal).toFixed(2)
     }, () => {

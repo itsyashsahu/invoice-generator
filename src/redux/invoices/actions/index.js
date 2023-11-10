@@ -3,7 +3,15 @@ export const DELETE_INVOICE = 'DELETE_INVOICE';
 export const UPDATE_INVOICE = 'UPDATE_INVOICE';
 export const SET_EDIT_INVOICE = 'SET_EDIT_INVOICE';
 export const CLEAR_EDIT_INVOICE = 'CLEAR_EDIT_INVOICE';
+export const SET_INVOICES = 'SET_INVOICES';
 
+
+export const setInvoices = (payload) => {
+  return {
+    type: SET_INVOICES,
+    payload
+  };
+}
 
 export const addInvoice = (payload) => {
   return {

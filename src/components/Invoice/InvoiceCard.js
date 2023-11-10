@@ -70,7 +70,7 @@ const InvoiceCard = ({ invoice = initialState }) => {
           <h5 className="fw-bold text-secondary"> {invoice.currency} {invoice.total}</h5>
         </div>
       </div>
-      <div className="p-4">
+      {/* <div className="p-4">
         <Row className="mb-4">
           <Col md={4}>
             <div className="fw-bold">Billed to:</div>
@@ -182,7 +182,7 @@ const InvoiceCard = ({ invoice = initialState }) => {
           handleSave={handleDelete}
           btnText='Delete'
         />
-      </div>
+      </div> */}
     </div>
   )
 }
